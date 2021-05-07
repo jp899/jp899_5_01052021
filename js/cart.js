@@ -186,6 +186,7 @@ class Cart{
      * @param {string} productId The product id to add.
      * @param {string} color The color to add.
      * @param {number} quantity The quantity to add.
+     * @param {number} price The unit price of the product.
      */
     addItem(productId,color,quantity,price){
         if(typeof(productId) !== "string" 
@@ -214,16 +215,51 @@ class Cart{
     /**
      * Remove the item with given productId and color.
      * SAVE the updated array in localstorage.
-     * @param {string} productId The product id to add.
-     * @param {string} color The color to add.
+     * @param {string} productId The product id to target.
+     * @param {string} color The color to target.
      */
     removeItem(productId,color){
-        let index=searchItemIndex(productId,color);
+        let index=this.searchItemIndex(productId,color);
         if(index === -1){
             return;
         }
 
         this.itemList.splice(index,1);
+        this.saveInLocalStorage();
+    }
+
+    
+    /**
+     * Increase the quantity of the product with given id and color.
+     * SAVE the updated array in localstorage.
+     * @param {string} productId The product id to target.
+     * @param {string} color The color to target.
+     * @param {string} [quantity=1] The quantity to add.
+     */
+     increaseQuantityOfItem(productId,color,quantity = 1){
+        let item=this.searchItem(productId,color);
+        if(item === null){
+            return;
+        }
+
+        item.quantity += quantity;
+        this.saveInLocalStorage();
+    }
+
+    /**
+     * Decrease the quantity of the product with given id and color.
+     * SAVE the updated array in localstorage.
+     * @param {string} productId The product id to target.
+     * @param {string} color The color to target.
+     * @param {string} [quantity=1] The quantity to substract.
+     */
+     decreaseQuantityOfItem(productId,color,quantity = 1){
+        let item=this.searchItem(productId,color);
+        if(item === null){
+            return;
+        }
+
+        item.quantity -= quantity;
         this.saveInLocalStorage();
     }
 

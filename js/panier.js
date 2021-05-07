@@ -18,6 +18,9 @@
     // // Can't go lower than 1.
     if(quantity > 1){
         currentRow.querySelector(".article-quantity").value=quantity-1;
+        cart.decreaseQuantityOfItem(productId,color);
+
+        updateDisplayedTotalPrice();
     }
 }
 
@@ -40,6 +43,9 @@
     let quantity=parseInt(currentRow.querySelector(".article-quantity").value);
 
     currentRow.querySelector(".article-quantity").value=quantity+1;
+    cart.increaseQuantityOfItem(productId,color);
+
+    updateDisplayedTotalPrice();
 }
 
 /**
@@ -58,6 +64,9 @@
     let currentRow=document.querySelector(`[data-product-id="${productId}"][data-color="${color}"]`);
 
     currentRow.remove();
+    cart.removeItem(productId,color);
+
+    updateDisplayedTotalPrice();
 }
 
 
@@ -145,6 +154,17 @@
 
 
 /**
+ * Updates the total price of the cart in the last row of the table.
+ */function updateDisplayedTotalPrice(){
+    // calculate total price of the cart
+    let totalPrice = cart.getTotalPrice();
+
+    // Modify the displayed value
+    document.getElementById("total-price").innerHTML=formatPrice(totalPrice);
+}
+
+
+/**
  * Adds a new row to the table of items in the DOM.
  * @param {CartItem} item The item to add to the table.
  */
@@ -170,11 +190,21 @@ async function addItemToTable(item){
 
 
 
+/**
+ * Builds the table. First add a row for each item in the cart.
+ * Then when all the items of the cart have been processed,
+ * it adds a row with total price of the cart.
+ */
+ async function buildTable(){
+    for(item of cart){
+        await addItemToTable(item);
+    }
+    addTotalToTable();
+}
+
+
+
 
 const cart=new Cart();
-
-for(item of cart){
-    addItemToTable(item);
-}
-addTotalToTable();
+buildTable();
 
