@@ -10,12 +10,16 @@
      * @param {string} color The color of the product.
      * @param {number} quantity The quantity of the product.
      * @param {number} price The price of the product.
+     * @param {string} name The name of the product.
+     * @param {string} imageUrl The Url where the image of the product can be fetched.
      * @throws {TypeError} - If one of the arguments is not of expected type.
      */
-    constructor(productId,color,quantity,price){
+    constructor(productId,color,quantity,price,name,imageUrl){
 
         if(typeof(productId) !== "string" 
             || typeof(color) !== "string"
+            || typeof(name) !== "string"
+            || typeof(imageUrl) !== "string"
             || typeof(quantity) !== "number" 
             || ! Number.isInteger(quantity)
             || typeof(price) !== "number" || ! Number.isInteger(price)){
@@ -26,6 +30,8 @@
         this.color=color;
         this.quantity=quantity;
         this.price=price;
+        this.imageUrl=imageUrl;
+        this.name=name;
     }
 
 }
@@ -98,7 +104,6 @@ class Cart{
      */
     hasChanged(){
         let cartString = localStorage.getItem("cart");
-        console.log(cartString !== this.cartString);
         return cartString !== this.cartString;
     }
 
@@ -114,7 +119,7 @@ class Cart{
     }
 
     /**
-     * Load the array data from localStorage.
+     * Load the array data from localStorage. Overwrites the Cart object array.
      */
     getFromLocalStorage(){
         let cartString = localStorage.getItem("cart");
@@ -207,9 +212,11 @@ class Cart{
      * @param {number} quantity The quantity to add.
      * @param {number} price The unit price of the product.
      */
-    addItem(productId,color,quantity,price){
+    addItem(productId,color,quantity,price,name,imageUrl){
         if(typeof(productId) !== "string" 
         || typeof(color) !== "string"
+        || typeof(name) !== "string"
+        || typeof(imageUrl) !== "string"
         || typeof(quantity) !== "number" 
         || ! Number.isInteger(quantity)
         || typeof(price) !== "number" || ! Number.isInteger(price)){
@@ -224,7 +231,7 @@ class Cart{
         let cartItem=cart.searchItem(productId,color);
         // Add the item to the cart if it's not already in the cart.
         if(cartItem === null){
-            let newCartItem=new CartItem(productId,color,quantity,price);
+            let newCartItem=new CartItem(productId,color,quantity,price,name,imageUrl);
             this.pushItem(newCartItem);
         }
         // Update the item if it's already in the cart for the desired color.

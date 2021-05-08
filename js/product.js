@@ -71,8 +71,10 @@ function addToCart(event){
     let color=document.getElementById("article-color").value;
     let quantity=parseInt(document.getElementById("article-quantity").value);
     let price = parseInt(document.getElementById("productPrice").dataset.priceInCents);
-    
-    cart.addItem(productId,color,quantity,price);
+    let name = document.getElementById("productTitle").innerText;
+    let imageUrl = document.getElementById("productImg").getAttribute("src");
+
+    cart.addItem(productId,color,quantity,price,name,imageUrl);
 
     alert("Article ajouté au panier.");
 }

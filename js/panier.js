@@ -3,7 +3,7 @@
  * Decrease the quantity displayed and updates the cart.
  * @param {Event} event - Event that triggered the callback.
  */
- async function decreaseQuantity(event){
+ function decreaseQuantity(event){
     event.preventDefault();
     // Get the info to locate the row in wich the button has been clicked.
     let productId=event.currentTarget.dataset.targetProductId;
@@ -12,7 +12,7 @@
     // If the cart has been modified by another page, refresh the cart and the table
     if (cart.hasChanged()){
         cart.getFromLocalStorage();
-        await refreshTable();
+        refreshTable();
     }
 
     // Get the row in wich the button has been clicked.
@@ -36,7 +36,7 @@
  * Increase the quantity displayed and updates the cart.
  * @param {Event} event - Event that triggered the callback.
  */
- async function increaseQuantity(event){
+ function increaseQuantity(event){
     event.preventDefault();
 
     // Get the info to locate the row in wich the button has been clicked.
@@ -46,7 +46,7 @@
     // If the cart has been modified by another page, refresh the cart and the table
     if (cart.hasChanged()){
         cart.getFromLocalStorage();
-        await refreshTable();
+        refreshTable();
     }
 
     // Get the row in wich the button has been clicked.
@@ -67,7 +67,7 @@
  * Removes the item from the displayed table and from the cart
  * @param {Event} event - Event that triggered the callback.
  */
- async function deleteItem(event){
+ function deleteItem(event){
     event.preventDefault();
 
     // Get the info to locate the row in wich the button has been clicked.
@@ -77,7 +77,7 @@
     // If the cart has been modified by another page, refresh the cart and the table
     if (cart.hasChanged()){
         cart.getFromLocalStorage();
-        await refreshTable();
+        refreshTable();
     }
 
     // Get the row in wich the button has been clicked.
@@ -98,7 +98,7 @@
  * @param {Object} productData- Additionnal data of the product.
  * @return {HTMLDivElement} - HTML element ready to display.
  */
- function buildItemRow(item,productData){
+ function buildItemRow(item){
     let newRow=document.createElement("tr");
     // Add data attributes to the row, to ease identification of each row
     newRow.dataset.productId=item.productId;
@@ -106,11 +106,11 @@
 
     newRow.innerHTML =
         `<td class="d-none d-sm-table-cell">
-            <img src="${productData.imageUrl}" class="img-fluid" alt="Photo d'ours en peluche">
+            <img src="${item.imageUrl}" class="img-fluid" alt="Photo d'ours en peluche">
         </td>
-        <td><a href="produit.html?productId=${item.productId}">${productData.name}</a></td>
+        <td><a href="produit.html?productId=${item.productId}">${item.name}</a></td>
         <td>${item.color}</td>
-        <td class="text-nowrap">${formatPrice(productData.price)}</td>
+        <td class="text-nowrap">${formatPrice(item.price)}</td>
         <td class="px-0">
             <form>
                 <div class="form-group form-inline">
@@ -190,12 +190,8 @@
  * Adds a new row to the table of items in the DOM.
  * @param {CartItem} item The item to add to the table.
  */
-async function addItemToTable(item){
-    // Get the product info from server in order to display image and price
-    let productData = await getProduct(item.productId);
-
-    // Create a new row of the table for the item and append it to the DOM
-    let newItemRow=buildItemRow(item,productData);
+function addItemToTable(item){
+    let newItemRow=buildItemRow(item);
     document.getElementsByTagName("tbody")[0].appendChild(newItemRow);
 }
 
@@ -212,9 +208,9 @@ async function addItemToTable(item){
 /**
  * Refresh the content of the table.
  */
- async function refreshTable(){
+ function refreshTable(){
     document.getElementsByTagName("tbody")[0].innerHTML = "";
-    await buildTable();
+    buildTable();
 }
 
 
@@ -225,9 +221,9 @@ async function addItemToTable(item){
  * Then when all the items of the cart have been processed,
  * it adds a row with total price of the cart.
  */
- async function buildTable(){
+ function buildTable(){
     for(item of cart){
-        await addItemToTable(item);
+        addItemToTable(item);
     }
     addTotalToTable();
 }
