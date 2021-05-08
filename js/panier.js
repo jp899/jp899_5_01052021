@@ -12,7 +12,7 @@
     // If the cart has been modified by another page, refresh the cart and the table
     if (cart.hasChanged()){
         cart.getFromLocalStorage();
-        refreshTable();
+        buildTable();
     }
 
     // Get the row in wich the button has been clicked.
@@ -46,7 +46,7 @@
     // If the cart has been modified by another page, refresh the cart and the table
     if (cart.hasChanged()){
         cart.getFromLocalStorage();
-        refreshTable();
+        buildTable();
     }
 
     // Get the row in wich the button has been clicked.
@@ -77,7 +77,7 @@
     // If the cart has been modified by another page, refresh the cart and the table
     if (cart.hasChanged()){
         cart.getFromLocalStorage();
-        refreshTable();
+        buildTable();
     }
 
     // Get the row in wich the button has been clicked.
@@ -86,7 +86,12 @@
     if(currentRow !== null){
         currentRow.remove();
         cart.removeItem(productId,color);
-        updateDisplayedTotalPrice();
+        if(cart.isEmpty()){
+            buildTable();
+        }
+        else{
+            updateDisplayedTotalPrice();
+        }
     }
 
 }
@@ -154,6 +159,24 @@
 
 
 /**
+ * Build the HTML structure and content of the headings row of the items table.
+ * @return {HTMLDivElement} - HTML element ready to display.
+ */
+ function buildHeadingsRow(){
+    let newRow=document.createElement("tr");
+
+    newRow.innerHTML=
+        `<th scope="col" class="d-none d-sm-table-cell col-sm-2"></th>
+        <th scope="col">Article</th>
+        <th scope="col">Couleur</th>
+        <th scope="col" >Prix</th>
+        <th scope="col">Quantité</th>
+        <th scope="col"></th>`
+
+    return newRow;
+}
+
+/**
  * Build the HTML structure and content of the total row of the items table.
  * @return {HTMLDivElement} - HTML element ready to display.
  */
@@ -172,6 +195,22 @@
         <td></td>`
 
     return newRow;
+}
+
+/**
+ * Build the HTML structure and content of a row of the table, 
+ * wich contains a message to inform the user that the cart is empty.
+ * @return {HTMLDivElement} - HTML element ready to display.
+ */
+ function buildEmptyMessageDiv(){
+    let newDiv=document.createElement("div");
+    newDiv.id="empty-message";
+    newDiv.classList.add("font-weight-bold","bg-warning","text-center","py-3");
+
+    newDiv.innerHTML=
+        `Votre panier est vide.`
+
+    return newDiv;
 }
 
 
@@ -197,6 +236,15 @@ function addItemToTable(item){
 
 
 /**
+ * Adds the headings row to the table of items in the DOM.
+ */
+ function addHeadingsToTable(){
+    let newHeadingsRow=buildHeadingsRow();
+    document.getElementsByTagName("thead")[0].appendChild(newHeadingsRow);
+}
+
+
+/**
  * Adds the last row to the table of items in the DOM.
  * This last row contains the total price of the order.
  */
@@ -205,15 +253,28 @@ function addItemToTable(item){
     document.getElementsByTagName("tbody")[0].appendChild(newTotalRow);
 }
 
+
 /**
- * Refresh the content of the table.
+ * Clear the content and headings of the table.
  */
- function refreshTable(){
+ function clearTable(){
+    let emptyMessage=document.getElementById("empty-message");
+    if (emptyMessage !== null){
+        emptyMessage.remove();
+    }
+    document.getElementsByTagName("thead")[0].innerHTML = "";
     document.getElementsByTagName("tbody")[0].innerHTML = "";
-    buildTable();
 }
 
 
+/**
+ * Create a div with a message for the user to indicate that the cart is empty.
+ */
+ function addEmptyCartMessage(){
+    let newEmptyMessageDiv=buildEmptyMessageDiv();
+    let mainElement=document.getElementsByTagName("main")[0];
+    mainElement.insertBefore(newEmptyMessageDiv,mainElement.childNodes[2]);
+}
 
 
 /**
@@ -222,10 +283,19 @@ function addItemToTable(item){
  * it adds a row with total price of the cart.
  */
  function buildTable(){
-    for(item of cart){
-        addItemToTable(item);
+
+    clearTable();
+
+    if(! cart.isEmpty()){
+        addHeadingsToTable();
+        for(item of cart){
+            addItemToTable(item);
+        }
+        addTotalToTable();
     }
-    addTotalToTable();
+    else{
+        addEmptyCartMessage();
+    }
 }
 
 
@@ -233,4 +303,6 @@ function addItemToTable(item){
 
 const cart=new Cart();
 buildTable();
+
+
 
