@@ -3,24 +3,31 @@
  * Decrease the quantity displayed and updates the cart.
  * @param {Event} event - Event that triggered the callback.
  */
- function decreaseQuantity(event){
+ async function decreaseQuantity(event){
     event.preventDefault();
     // Get the info to locate the row in wich the button has been clicked.
     let productId=event.currentTarget.dataset.targetProductId;
     let color=event.currentTarget.dataset.targetColor;
 
+    // If the cart has been modified by another page, refresh the cart and the table
+    if (cart.hasChanged()){
+        cart.getFromLocalStorage();
+        await refreshTable();
+    }
+
     // Get the row in wich the button has been clicked.
     let currentRow=document.querySelector(`[data-product-id="${productId}"][data-color="${color}"]`);
 
-    // Get the current quantity of the item.
-    let quantity=parseInt(currentRow.querySelector(".article-quantity").value);
+    if(currentRow !== null){
+        // Get the current quantity of the item.
+        let quantity=parseInt(currentRow.querySelector(".article-quantity").value);
 
-    // // Can't go lower than 1.
-    if(quantity > 1){
-        currentRow.querySelector(".article-quantity").value=quantity-1;
-        cart.decreaseQuantityOfItem(productId,color);
-
-        updateDisplayedTotalPrice();
+        // // Can't go lower than 1.
+        if(quantity > 1){
+            currentRow.querySelector(".article-quantity").value=quantity-1;
+            cart.decreaseQuantityOfItem(productId,color);
+            updateDisplayedTotalPrice();
+        }
     }
 }
 
@@ -29,23 +36,30 @@
  * Increase the quantity displayed and updates the cart.
  * @param {Event} event - Event that triggered the callback.
  */
- function increaseQuantity(event){
+ async function increaseQuantity(event){
     event.preventDefault();
 
     // Get the info to locate the row in wich the button has been clicked.
     let productId=event.currentTarget.dataset.targetProductId;
     let color=event.currentTarget.dataset.targetColor;
 
+    // If the cart has been modified by another page, refresh the cart and the table
+    if (cart.hasChanged()){
+        cart.getFromLocalStorage();
+        await refreshTable();
+    }
+
     // Get the row in wich the button has been clicked.
     let currentRow=document.querySelector(`[data-product-id="${productId}"][data-color="${color}"]`);
 
-    // Get the current quantity of the item.
-    let quantity=parseInt(currentRow.querySelector(".article-quantity").value);
+    if(currentRow !== null){
+        // Get the current quantity of the item.
+        let quantity=parseInt(currentRow.querySelector(".article-quantity").value);
 
-    currentRow.querySelector(".article-quantity").value=quantity+1;
-    cart.increaseQuantityOfItem(productId,color);
-
-    updateDisplayedTotalPrice();
+        currentRow.querySelector(".article-quantity").value=quantity+1;
+        cart.increaseQuantityOfItem(productId,color);
+        updateDisplayedTotalPrice();
+    }
 }
 
 /**
@@ -53,20 +67,28 @@
  * Removes the item from the displayed table and from the cart
  * @param {Event} event - Event that triggered the callback.
  */
- function deleteItem(event){
+ async function deleteItem(event){
     event.preventDefault();
 
     // Get the info to locate the row in wich the button has been clicked.
     let productId=event.currentTarget.dataset.targetProductId;
     let color=event.currentTarget.dataset.targetColor;
 
+    // If the cart has been modified by another page, refresh the cart and the table
+    if (cart.hasChanged()){
+        cart.getFromLocalStorage();
+        await refreshTable();
+    }
+
     // Get the row in wich the button has been clicked.
     let currentRow=document.querySelector(`[data-product-id="${productId}"][data-color="${color}"]`);
 
-    currentRow.remove();
-    cart.removeItem(productId,color);
+    if(currentRow !== null){
+        currentRow.remove();
+        cart.removeItem(productId,color);
+        updateDisplayedTotalPrice();
+    }
 
-    updateDisplayedTotalPrice();
 }
 
 
@@ -183,10 +205,18 @@ async function addItemToTable(item){
  * This last row contains the total price of the order.
  */
  function addTotalToTable(){
-
     let newTotalRow=buildTotalRow();
     document.getElementsByTagName("tbody")[0].appendChild(newTotalRow);
 }
+
+/**
+ * Refresh the content of the table.
+ */
+ async function refreshTable(){
+    document.getElementsByTagName("tbody")[0].innerHTML = "";
+    await buildTable();
+}
+
 
 
 

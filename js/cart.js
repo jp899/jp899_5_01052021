@@ -49,7 +49,10 @@ class Cart{
         this.itemList=[];
 
         if(localStorage.getItem('cart')){
-            this.getFromLocalStorage()
+            this.getFromLocalStorage();
+        }
+        else{
+            this.saveInLocalStorage();
         }
     }
 
@@ -90,11 +93,24 @@ class Cart{
     }
 
     /**
+     * Check if the localstorage has been changed by another page.
+     * @return {boolean} - True if the cart has been changed.
+     */
+    hasChanged(){
+        let cartString = localStorage.getItem("cart");
+        console.log(cartString !== this.cartString);
+        return cartString !== this.cartString;
+    }
+
+    /**
      * Save the array in localStorage. Overwrites the existing cart data.
      */
     saveInLocalStorage(){
         let cartString = JSON.stringify(this.itemList);
         localStorage.setItem("cart",cartString);
+
+        // Save in the item the last known localStorage state
+        this.cartString = cartString;
     }
 
     /**
@@ -103,6 +119,9 @@ class Cart{
     getFromLocalStorage(){
         let cartString = localStorage.getItem("cart");
         this.itemList = JSON.parse(cartString);
+
+        // Save in the item the last known localStorage state
+        this.cartString = cartString;
     }
 
     /**
@@ -195,6 +214,11 @@ class Cart{
         || ! Number.isInteger(quantity)
         || typeof(price) !== "number" || ! Number.isInteger(price)){
             throw new TypeError("Incorrect arguments");
+        }
+
+        // Reload the data from localstorage if it has been modified by another page
+        if (this.hasChanged()){
+            this.getFromLocalStorage();
         }
 
         let cartItem=cart.searchItem(productId,color);
