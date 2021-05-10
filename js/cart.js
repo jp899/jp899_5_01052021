@@ -62,27 +62,6 @@ class Cart{
         }
     }
 
-    /**
-     * Returns the number of distincts items in the array.
-     * @return {number} - the number of distincts items.
-     */
-    getNbOfDifferentItems(){
-        return this.itemList.length;
-    }
-
-    /**
-     * Returns the cumulative quantity of all items.
-     * @return {number} - the cumulative quantity of all items.
-     */
-    getTotalNbOfItems(){
-        let totalNbOfItems=0;
-
-        for(let item in this.itemList){
-            totalNbOfItems+=item.quantity;
-        }
-
-        return totalNbOfItems;
-    }
 
     /**
      * Returns the cumulative quantity of all items.
@@ -91,11 +70,27 @@ class Cart{
     getTotalPrice(){
         let totalPrice=0;
 
-        for(let item of this.itemList){
+        for(let item of this){
             totalPrice+=item.price*item.quantity;
         }
 
         return totalPrice;
+    }
+
+
+    /**
+     * Returns a list of all the productsId in the cart.
+     * If a item has a quantity of n, the list contains n times its productId.
+     * @return {string[]} - List of productId.
+     */
+    getListOfProducts(){
+        let listOfProducts=[];
+        for(item of this){
+            for(let i = 0; i < item.quantity; i++){
+                listOfProducts.push(item.productId);
+            }
+        }
+        return listOfProducts;
     }
 
     /**
@@ -154,7 +149,7 @@ class Cart{
             throw new TypeError("Incorrect arguments");
         }
 
-        for(let cartItem of this.itemList){
+        for(let cartItem of this){
             if (cartItem.productId === productId && cartItem.color === color){
                 return cartItem;
             }

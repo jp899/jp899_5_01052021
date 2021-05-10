@@ -2,6 +2,7 @@
 
 
 const backAPIUrlRoot = "http://localhost:3000/api/teddies/";
+const backAPIUrlOrder = backAPIUrlRoot + "order";
 
 
 /**
@@ -70,12 +71,37 @@ const backAPIUrlRoot = "http://localhost:3000/api/teddies/";
 
 /**
  * Fetch a specific product from the server.
- * @param {string} productId- Id of the product to fetch.
+ * @param {string} productId - Id of the product to fetch.
  * @return {Promise} - Promise resolving with the json sent in the server response.
  * @throws {Error} Error status if fetching is not OK.
  */
  async function getProduct(productId){
     const result = await fetch(backAPIUrlRoot+productId);
+    if(result.ok){
+        return result.json();
+    }
+    else{
+        throw new Error("ERREUR " + result.status);
+    }
+}
+
+
+/**
+ * Send a request to order a list of products for the user.
+ * @param {Object} contactData - User data to send to the server.
+ * @param {string[]} listOfProducts - List of the productIds of the items to order.
+ * @return {Promise} - Promise resolving with the json sent in the server response.
+ * @throws {Error} Error status if fetching is not OK.
+ */
+ async function sendOrderRequest(contactData,listOfProducts){
+    const result = await fetch(backAPIUrlOrder, 
+                                {method: "POST",
+                                headers: {'Accept':'application/json',
+                                        'Content-Type':'application/json'},
+                                body:JSON.stringify({contact: contactData,
+                                                    products: listOfProducts})
+                                });
+
     if(result.ok){
         return result.json();
     }

@@ -75,8 +75,6 @@ function addToCart(event){
     let imageUrl = document.getElementById("productImg").getAttribute("src");
 
     cart.addItem(productId,color,quantity,price,name,imageUrl);
-
-    alert("Article ajouté au panier.");
 }
 
 
@@ -107,9 +105,6 @@ function addToCart(event){
 
     document.getElementById("article-quantity").value=quantity+1;
 }
-
-
-
 
 
 const cart=new Cart();

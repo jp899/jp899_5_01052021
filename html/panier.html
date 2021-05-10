@@ -66,18 +66,60 @@
 
     <main class="container">
 
+      <!-- Modal displayed when the user tries to submit his order but the cart is empty -->
+      <div id="emptyCartModal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Le panier est vide</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Souhaitez vous revenir à la liste des produits ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+              <a class="btn btn-primary" href="../index.html">Aller à la liste des produits</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal displayed when the user tries to submit when the cart has been modified by another page -->
+      <div id="modifiedCartModal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Le contenu du panier à été modifié.</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Veuillez vérifier son contenu avant de valider votre commande.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
       <h1 class="jumbotron py-4 mb-3 mt-4 text-center">Panier</h1>
 
 
       <section class="row mt-4 justify-content-center">
 
-        <table class="col col-lg-8 table table-striped table-responsive mx-auto w-auto">
+        <table class="col col-lg-8 table table-striped table-responsive">
 
-          <thead class="border-left border-right mx-auto w-auto">
+          <thead class="border-left border-right">
     
           </thead>
 
-          <tbody class="border-left border-right border-bottom mx-auto w-auto">
+          <tbody class="border-left border-right border-bottom">
 
           </tbody>
 
@@ -88,7 +130,7 @@
 
       <section class="row justify-content-center mt-3">
           
-        <form class="col col-lg-6 jumbotron">
+        <form id ="order-form" class="col col-lg-6 jumbotron">
 
           <h2 class="mb-4 h3">Formulaire de commande</h2>
 
@@ -119,7 +161,7 @@
             <input type="email" class="form-control" id="email" required>
           </div>
   
-          <button type="submit" class="btn btn-primary mt-3" onclick="location.href='confirmation.html'">Valider la commande</button>
+          <button type="submit" id="validate-button" class="btn btn-primary mt-3">Valider la commande</button>
 
         </form>
 

@@ -273,7 +273,8 @@ function addItemToTable(item){
  function addEmptyCartMessage(){
     let newEmptyMessageDiv=buildEmptyMessageDiv();
     let mainElement=document.getElementsByTagName("main")[0];
-    mainElement.insertBefore(newEmptyMessageDiv,mainElement.childNodes[2]);
+    let firstSectionElement=document.getElementsByTagName("section")[0];
+    mainElement.insertBefore(newEmptyMessageDiv,firstSectionElement);
 }
 
 
@@ -299,10 +300,76 @@ function addItemToTable(item){
 }
 
 
+/**
+ * Builds an object containing the user data submited in the form.
+ * @return {Object} - contact data object.
+ */
+ function buildContactData(){
+     return {firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            address: document.getElementById("adress").value,
+            city: document.getElementById("city").value,
+            email: document.getElementById("email").value
+        }
+}
+
+
+
+/**
+ * Callback for form validation button.
+ * Presence/type of the input fields has already been checked with HTML constraints
+ * @param {Event} event - Event that triggered the callback.
+ */
+ function validateForm(event){
+    
+    event.preventDefault();
+
+    // If the cart has been modified by another page, refresh the cart and the table
+    // Then display a modal to inform the user.
+    if (cart.hasChanged()){
+        console.log("test");
+        cart.getFromLocalStorage();
+        buildTable();
+        $("#modifiedCartModal").modal();
+    }
+    // If the cart is empty, display a modal to inform the user 
+    // and propose to return to the product list page.
+    else if (cart.isEmpty()){
+        $("#emptyCartModal").modal();
+    }
+    // If All controls are OK : submit order to the server 
+    else{
+        // Create the contact object
+        let contactData=buildContactData();
+
+        // Get the list of products from the cart
+        let listOfProducts = cart.getListOfProducts();
+
+        // POST request to server
+        sendOrderRequest(contactData,listOfProducts)
+        .then(function(response){
+            //store orderId + total price in localStorage for the confirmation page
+            let orderDataString = JSON.stringify({orderId: response.orderId,
+                                                totalPrice: cart.getTotalPrice()});
+            localStorage.setItem("orderData",orderDataString);
+            //empty the cart
+            cart.clear();
+            //finally navigate to the confirmation page
+            window.location.href = "./confirmation.html";
+        })
+        .catch(function(error){
+            console.log(error);
+            alert("Erreur d'accès au serveur, veuillez réessayer plus tard.");
+        }); 
+    }
+}
+
+
 
 
 const cart=new Cart();
 buildTable();
+document.getElementById("order-form").addEventListener("submit",validateForm);
 
 
 
