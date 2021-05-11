@@ -111,7 +111,7 @@
 
     newRow.innerHTML =
         `<td class="d-none d-sm-table-cell">
-            <img src="${item.imageUrl}" class="img-fluid" alt="Photo d'ours en peluche">
+            <img src="${item.imageUrl}" class="img-fluid img-cart-item" alt="Photo d'ours en peluche">
         </td>
         <td><a href="produit.html?productId=${item.productId}">${item.name}</a></td>
         <td>${item.color}</td>

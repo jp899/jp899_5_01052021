@@ -15,9 +15,9 @@ function addErrorToProductList(errorElement){
  */
 function buildProductCard(product){
     let newCard = document.createElement("div");
-    newCard.classList.add("col-12","col-lg-4");
-    newCard.innerHTML = `<div class="card mt-3 mb-2 my-lg-3 shadow rounded-lg">
-                            <img src="${product.imageUrl}" alt="Photo d'ours en peluche" class=".card-img-top rounded-lg">
+    newCard.classList.add("col");
+    newCard.innerHTML = `<div class="card mt-3 mb-2 mx-sm-5 mx-md-auto my-lg-3 shadow rounded-lg">
+                            <img src="${product.imageUrl}" alt="Photo d'ours en peluche" class="card-img-top img-product-card rounded-lg">
                             <div class="card-body">
                                 <h2 class="card-title">${product.name}</h2>
                                 <p class="card-text">${product.description}</p>
