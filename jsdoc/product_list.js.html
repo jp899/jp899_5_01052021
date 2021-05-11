@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: product_list.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: product_list.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Display the &lt;div> containing an error message in place of the product list.
+ * @param {HTMLDivElement} errorElement .
+ */
+function addErrorToProductList(errorElement){      
+    errorElement.classList.add("col-12","col-md-4","offset-md-4");
+    document.getElementById("product_list").append(errorElement);
+}
+
+
+/**
+ * Build the HTML structure and content of a product card.
+ * @param {Object} product- Product object to get the data from.
+ * @return {HTMLDivElement} - HTML element ready to display.
+ */
+function buildProductCard(product){
+    let newCard = document.createElement("div");
+    newCard.classList.add("col");
+    newCard.innerHTML = `&lt;div class="card mt-3 mb-2 mx-sm-5 mx-md-auto my-lg-3 shadow rounded-lg">
+                            &lt;img src="${product.imageUrl}" alt="Photo d'ours en peluche" class="card-img-top img-product-card rounded-lg">
+                            &lt;div class="card-body">
+                                &lt;h2 class="card-title">${product.name}&lt;/h2>
+                                &lt;p class="card-text">${product.description}&lt;/p>
+                                &lt;div class ="row">
+                                    &lt;div class="col-7">
+                                        &lt;a class="btn btn-info" href="html/produit.html?productId=${product._id}"> 
+                                        Plus de détails
+                                        &lt;/a>
+                                    &lt;/div>
+                                    &lt;div class="col-5 text-right">
+                                        &lt;div class="price h4 text-success">
+                                        ${formatPrice(product.price)}
+                                        &lt;/div>
+                                    &lt;/div>  
+                                &lt;/div>
+                            &lt;/div>
+                         &lt;/div>`;
+    return newCard;
+}
+
+
+getProductList()
+.then(function(productList){
+    for (let product of productList){
+        let newCard = buildProductCard(product);
+        document.getElementById("product_list").appendChild(newCard);
+    }
+})
+.catch(function(error){
+    console.log(error);
+    let errorElement = buildErrorElement(error);
+    addErrorToProductList(errorElement);
+});
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cart.html">Cart</a></li><li><a href="CartItem.html">CartItem</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addEmptyCartMessage">addEmptyCartMessage</a></li><li><a href="global.html#addErrorToMain">addErrorToMain</a></li><li><a href="global.html#addErrorToProductList">addErrorToProductList</a></li><li><a href="global.html#addHeadingsToTable">addHeadingsToTable</a></li><li><a href="global.html#addItemToTable">addItemToTable</a></li><li><a href="global.html#addToCart">addToCart</a></li><li><a href="global.html#addTotalToTable">addTotalToTable</a></li><li><a href="global.html#buildContactData">buildContactData</a></li><li><a href="global.html#buildEmptyMessageDiv">buildEmptyMessageDiv</a></li><li><a href="global.html#buildErrorElement">buildErrorElement</a></li><li><a href="global.html#buildHeadingsRow">buildHeadingsRow</a></li><li><a href="global.html#buildItemRow">buildItemRow</a></li><li><a href="global.html#buildProductCard">buildProductCard</a></li><li><a href="global.html#buildProductImage">buildProductImage</a></li><li><a href="global.html#buildTable">buildTable</a></li><li><a href="global.html#buildTotalRow">buildTotalRow</a></li><li><a href="global.html#clearTable">clearTable</a></li><li><a href="global.html#decreaseQuantity">decreaseQuantity</a></li><li><a href="global.html#deleteItem">deleteItem</a></li><li><a href="global.html#fillColorsList">fillColorsList</a></li><li><a href="global.html#fillProductData">fillProductData</a></li><li><a href="global.html#formatPrice">formatPrice</a></li><li><a href="global.html#getProduct">getProduct</a></li><li><a href="global.html#getProductList">getProductList</a></li><li><a href="global.html#increaseQuantity">increaseQuantity</a></li><li><a href="global.html#processParameters">processParameters</a></li><li><a href="global.html#sendOrderRequest">sendOrderRequest</a></li><li><a href="global.html#updateDisplayedTotalPrice">updateDisplayedTotalPrice</a></li><li><a href="global.html#validateForm">validateForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue May 11 2021 22:29:22 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

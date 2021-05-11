@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: general.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: general.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// GENERAL FUNCTIONS AND DATA USED THROUGH ALL PAGES
+
+
+const backAPIUrlRoot = "http://localhost:3000/api/teddies/";
+const backAPIUrlOrder = backAPIUrlRoot + "order";
+
+
+/**
+ * Converts the price to display format.
+ * @param {number} price The price to convert, must be number/integer and in cents.
+ * @throws {TypeError} If bad arguments.
+ * @return {string} - The price ready to display.
+ */
+ function formatPrice(price){
+    if (typeof(price) !== "number" || ! Number.isInteger(price)){
+        throw new TypeError("Argument must be integer");
+    }
+
+    //Convert price to string.
+    let priceString = "" + price;
+
+    //Add comma and missing zeroes to get from cents to euros.
+    switch(priceString.length){
+        case 1:
+            priceString = "00,0" + priceString;
+            break;
+        case 2:
+            priceString = "00," + priceString;
+            break;
+        case 3:
+            priceString = "0" + priceString.slice(0,-2) + "," + priceString.slice(-2);
+            break;
+        default:
+            priceString = priceString.slice(0,-2) + "," + priceString.slice(-2);
+    }
+
+    //Add currency symbol befor return.
+    return priceString + " &amp;euro;";
+}
+
+
+/**
+ * Create a &lt;div> containing an error message.
+ * @param {Error} error The error to get the message from'.
+ * @return {HTMLDivElement} - The &lt;div> element.
+ */
+ function buildErrorElement(error){
+    let newElement = document.createElement("div");
+    newElement.innerHTML = error.message;
+    newElement.classList.add("h2","text-center","text-white","bg-danger","py-3","rounded-lg");
+    return newElement;
+    
+}
+
+
+/**
+ * Fetch the list of products from the server.
+ * @return {Promise} - Promise resolving with the json sent in the server response.
+ * @throws {Error} Error status if fetching is not OK.
+ */
+ async function getProductList(){
+    const result = await fetch(backAPIUrlRoot);
+    if(result.ok){
+        return result.json();
+    }
+    else{
+        throw new Error("ERREUR " + result.status);
+    }
+}
+
+
+/**
+ * Fetch a specific product from the server.
+ * @param {string} productId - Id of the product to fetch.
+ * @return {Promise} - Promise resolving with the json sent in the server response.
+ * @throws {Error} Error status if fetching is not OK.
+ */
+ async function getProduct(productId){
+    const result = await fetch(backAPIUrlRoot+productId);
+    if(result.ok){
+        return result.json();
+    }
+    else{
+        throw new Error("ERREUR " + result.status);
+    }
+}
+
+
+/**
+ * Send a request to order a list of products for the user.
+ * @param {Object} contactData - User data to send to the server.
+ * @param {string[]} listOfProducts - List of the productIds of the items to order.
+ * @return {Promise} - Promise resolving with the json sent in the server response.
+ * @throws {Error} Error status if fetching is not OK.
+ */
+ async function sendOrderRequest(contactData,listOfProducts){
+    const result = await fetch(backAPIUrlOrder, 
+                                {method: "POST",
+                                headers: {'Accept':'application/json',
+                                        'Content-Type':'application/json'},
+                                body:JSON.stringify({contact: contactData,
+                                                    products: listOfProducts})
+                                });
+
+    if(result.ok){
+        return result.json();
+    }
+    else{
+        throw new Error("ERREUR " + result.status);
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cart.html">Cart</a></li><li><a href="CartItem.html">CartItem</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addEmptyCartMessage">addEmptyCartMessage</a></li><li><a href="global.html#addErrorToMain">addErrorToMain</a></li><li><a href="global.html#addErrorToProductList">addErrorToProductList</a></li><li><a href="global.html#addHeadingsToTable">addHeadingsToTable</a></li><li><a href="global.html#addItemToTable">addItemToTable</a></li><li><a href="global.html#addToCart">addToCart</a></li><li><a href="global.html#addTotalToTable">addTotalToTable</a></li><li><a href="global.html#buildContactData">buildContactData</a></li><li><a href="global.html#buildEmptyMessageDiv">buildEmptyMessageDiv</a></li><li><a href="global.html#buildErrorElement">buildErrorElement</a></li><li><a href="global.html#buildHeadingsRow">buildHeadingsRow</a></li><li><a href="global.html#buildItemRow">buildItemRow</a></li><li><a href="global.html#buildProductCard">buildProductCard</a></li><li><a href="global.html#buildProductImage">buildProductImage</a></li><li><a href="global.html#buildTable">buildTable</a></li><li><a href="global.html#buildTotalRow">buildTotalRow</a></li><li><a href="global.html#clearTable">clearTable</a></li><li><a href="global.html#decreaseQuantity">decreaseQuantity</a></li><li><a href="global.html#deleteItem">deleteItem</a></li><li><a href="global.html#fillColorsList">fillColorsList</a></li><li><a href="global.html#fillProductData">fillProductData</a></li><li><a href="global.html#formatPrice">formatPrice</a></li><li><a href="global.html#getProduct">getProduct</a></li><li><a href="global.html#getProductList">getProductList</a></li><li><a href="global.html#increaseQuantity">increaseQuantity</a></li><li><a href="global.html#processParameters">processParameters</a></li><li><a href="global.html#sendOrderRequest">sendOrderRequest</a></li><li><a href="global.html#updateDisplayedTotalPrice">updateDisplayedTotalPrice</a></li><li><a href="global.html#validateForm">validateForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue May 11 2021 22:29:22 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

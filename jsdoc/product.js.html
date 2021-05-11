@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: product.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: product.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Display a &lt;div> containing an error message in the &lt;main>.
+ * @param {HTMLDivElement} errorElement &lt;div> containing an error message.
+ */
+function addErrorToMain(errorElement){
+    const mainElement = document.getElementsByTagName("main")[0];
+
+    //First : Create a row &lt;div>
+    let newDivElement = document.createElement("div");
+    newDivElement.classList.add("row","mt-4","mb-3");
+    //Then add the error &lt;div> as a column of the row &lt;div> 
+    errorElement.classList.add("col-12","col-md-4","offset-md-4");
+    newDivElement.append(errorElement);
+
+    //Empty the &lt;main> element to replace its content with the &lt;div>
+    mainElement.innerHTML = "";
+    mainElement.append(newDivElement);
+}
+
+
+/**
+ * Get the product id from the parameters of the url.
+ * @return {string} - The id of the product to display.
+ */
+function processParameters(){
+    const urlString = location.toString();
+    const url = new URL(urlString);
+    let productId = url.searchParams.get("productId");
+
+    return productId;
+}
+
+
+/**
+ * Fills the #article-color element with all the possible options.
+ * @param {string[]} colors List of the possible colors.
+ */
+function fillColorsList(colors){
+    for(let color of colors){
+        let newOptionElement = document.createElement("option");
+        newOptionElement.innerHTML = color;
+        document.getElementById("article-color").append(newOptionElement);
+    }
+}
+
+/**
+ * Build the HTML structure and content of a the product image.
+ * @param {string} imageUrl The url where to fetch the image.
+ * @return {HTMLDivElement} - HTML element ready to display.
+ */
+ function buildProductImage(imageUrl){
+    let newImg = document.createElement("img");
+    newImg.id = "productImg";
+    newImg.classList.add("img-fluid", "border", "border-warning", "rounded-lg");
+    newImg.setAttribute("alt","Photo d'ours en peluche");
+    newImg.setAttribute("src",imageUrl);
+
+    return newImg;
+}
+
+/**
+ * Fills the content of the HTML with the properties of the product.
+ * @param {Object} product Product to get the data from.
+ */
+function fillProductData(product){
+    document.title = "Orinoco - " + product.name;
+    document.getElementById("productTitle").innerHTML = product.name;
+    document.getElementById("productDescription").innerHTML = product.description;
+    document.getElementById("productPrice").innerHTML = formatPrice(product.price);
+    document.getElementById("productPrice").dataset.priceInCents = product.price;
+
+    let newImg = buildProductImage(product.imageUrl);
+    document.getElementById("img-container").appendChild(newImg);
+
+    fillColorsList(product.colors);
+}
+
+
+/**
+ * Callback for adding to the cart the product currently displayed in the page.
+ * Gets the productId from global variable.
+ * Gets the color and quantity desired from the DOM.
+ * @param {Event} event - Event that triggered the callback.
+ */
+function addToCart(event){
+    event.preventDefault();
+    let color = document.getElementById("article-color").value;
+    let quantity = parseInt(document.getElementById("article-quantity").value);
+    let price = parseInt(document.getElementById("productPrice").dataset.priceInCents);
+    let name = document.getElementById("productTitle").innerText;
+    let imageUrl = document.getElementById("productImg").getAttribute("src");
+
+    cart.addItem(productId,color,quantity,price,name,imageUrl);
+}
+
+
+/**
+ * Callback for minus button.
+ * Decrease the quantity desired.
+ * @param {Event} event - Event that triggered the callback.
+ */
+ function decreaseQuantity(event){
+    event.preventDefault();
+    let quantity = parseInt(document.getElementById("article-quantity").value);
+
+    // Can't go lower than 1.
+    if(quantity > 1){
+        document.getElementById("article-quantity").value = quantity-1;
+    }
+}
+
+
+/**
+ * Callback for plus button.
+ * Increase the quantity desired.
+ * @param {Event} event - Event that triggered the callback.
+ */
+ function increaseQuantity(event){
+    event.preventDefault();
+    let quantity = parseInt(document.getElementById("article-quantity").value);
+
+    document.getElementById("article-quantity").value = quantity+1;
+}
+
+
+const cart = new Cart();
+const productId = processParameters();
+
+getProduct(productId)
+.then(function(product){
+    fillProductData(product);
+    document.getElementById("addToCartButton").addEventListener("click",addToCart);
+    document.getElementById("quantityMinusButton").addEventListener("click",decreaseQuantity);
+    document.getElementById("quantityPlusButton").addEventListener("click",increaseQuantity);
+})
+.catch(function(error){
+    console.log(error);
+    const errorElement = buildErrorElement(error);
+    addErrorToMain(errorElement);
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cart.html">Cart</a></li><li><a href="CartItem.html">CartItem</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addEmptyCartMessage">addEmptyCartMessage</a></li><li><a href="global.html#addErrorToMain">addErrorToMain</a></li><li><a href="global.html#addErrorToProductList">addErrorToProductList</a></li><li><a href="global.html#addHeadingsToTable">addHeadingsToTable</a></li><li><a href="global.html#addItemToTable">addItemToTable</a></li><li><a href="global.html#addToCart">addToCart</a></li><li><a href="global.html#addTotalToTable">addTotalToTable</a></li><li><a href="global.html#buildContactData">buildContactData</a></li><li><a href="global.html#buildEmptyMessageDiv">buildEmptyMessageDiv</a></li><li><a href="global.html#buildErrorElement">buildErrorElement</a></li><li><a href="global.html#buildHeadingsRow">buildHeadingsRow</a></li><li><a href="global.html#buildItemRow">buildItemRow</a></li><li><a href="global.html#buildProductCard">buildProductCard</a></li><li><a href="global.html#buildProductImage">buildProductImage</a></li><li><a href="global.html#buildTable">buildTable</a></li><li><a href="global.html#buildTotalRow">buildTotalRow</a></li><li><a href="global.html#clearTable">clearTable</a></li><li><a href="global.html#decreaseQuantity">decreaseQuantity</a></li><li><a href="global.html#deleteItem">deleteItem</a></li><li><a href="global.html#fillColorsList">fillColorsList</a></li><li><a href="global.html#fillProductData">fillProductData</a></li><li><a href="global.html#formatPrice">formatPrice</a></li><li><a href="global.html#getProduct">getProduct</a></li><li><a href="global.html#getProductList">getProductList</a></li><li><a href="global.html#increaseQuantity">increaseQuantity</a></li><li><a href="global.html#processParameters">processParameters</a></li><li><a href="global.html#sendOrderRequest">sendOrderRequest</a></li><li><a href="global.html#updateDisplayedTotalPrice">updateDisplayedTotalPrice</a></li><li><a href="global.html#validateForm">validateForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue May 11 2021 22:29:22 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

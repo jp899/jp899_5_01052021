@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: panier.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: panier.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Callback for minus button.
  * Decrease the quantity displayed and updates the cart.
  * @param {Event} event - Event that triggered the callback.
@@ -109,44 +137,44 @@
     newRow.dataset.color = item.color;
 
     newRow.innerHTML =
-        `<td class="d-none d-sm-table-cell">
-            <img src="${item.imageUrl}" class="img-fluid img-cart-item" alt="Photo d'ours en peluche">
-        </td>
-        <td><a href="produit.html?productId=${item.productId}">${item.name}</a></td>
-        <td>${item.color}</td>
-        <td class="text-nowrap">${formatPrice(item.price)}</td>
-        <td class="px-0">
-            <form>
-                <div class="form-group form-inline">
+        `&lt;td class="d-none d-sm-table-cell">
+            &lt;img src="${item.imageUrl}" class="img-fluid img-cart-item" alt="Photo d'ours en peluche">
+        &lt;/td>
+        &lt;td>&lt;a href="produit.html?productId=${item.productId}">${item.name}&lt;/a>&lt;/td>
+        &lt;td>${item.color}&lt;/td>
+        &lt;td class="text-nowrap">${formatPrice(item.price)}&lt;/td>
+        &lt;td class="px-0">
+            &lt;form>
+                &lt;div class="form-group form-inline">
 
-                    <span class="input-group ml-sm-3">
+                    &lt;span class="input-group ml-sm-3">
 
-                        <input type="text" name="article-quantity" 
+                        &lt;input type="text" name="article-quantity" 
                         class="article-quantity mx-1 form-control  bg-white" value="${item.quantity}" min="1" max="100" readonly>
                         
-                        <div class="flex-column">
+                        &lt;div class="flex-column">
                     
-                            <button type="button" class="d-block quantityPlusButton btn btn-secondary btn-sm py-0 mb-1" 
+                            &lt;button type="button" class="d-block quantityPlusButton btn btn-secondary btn-sm py-0 mb-1" 
                              data-target-product-id="${item.productId}" data-target-color="${item.color}">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                                &lt;i class="fas fa-plus">&lt;/i>
+                            &lt;/button>
 
-                            <button type="button" class="d-block quantityMinusButton btn btn-secondary btn-sm py-0"
+                            &lt;button type="button" class="d-block quantityMinusButton btn btn-secondary btn-sm py-0"
                             data-target-product-id="${item.productId}" data-target-color="${item.color}">
-                                <i class="fas fa-minus"></i>
-                            </button>
+                                &lt;i class="fas fa-minus">&lt;/i>
+                            &lt;/button>
 
-                        </div>
-                    </span>
-                </div>
-            </form>
-        </td>              
-        <td>
-            <button type="button" class="btn text-secondary deleteButton" 
+                        &lt;/div>
+                    &lt;/span>
+                &lt;/div>
+            &lt;/form>
+        &lt;/td>              
+        &lt;td>
+            &lt;button type="button" class="btn text-secondary deleteButton" 
              data-target-product-id="${item.productId}" data-target-color="${item.color}">
-                <i class="fas fa-trash-alt"></i>
-            </button>
-        </td>`
+                &lt;i class="fas fa-trash-alt">&lt;/i>
+            &lt;/button>
+        &lt;/td>`
 
     // Add callbacks to the different buttons of the row
     newRow.querySelector(".quantityMinusButton").addEventListener("click",decreaseQuantity);
@@ -165,12 +193,12 @@
     let newRow = document.createElement("tr");
 
     newRow.innerHTML =
-        `<th scope="col" class="d-none d-sm-table-cell col-sm-2"></th>
-        <th scope="col">Article</th>
-        <th scope="col">Couleur</th>
-        <th scope="col" >Prix</th>
-        <th scope="col">Quantité</th>
-        <th scope="col"></th>`
+        `&lt;th scope="col" class="d-none d-sm-table-cell col-sm-2">&lt;/th>
+        &lt;th scope="col">Article&lt;/th>
+        &lt;th scope="col">Couleur&lt;/th>
+        &lt;th scope="col" >Prix&lt;/th>
+        &lt;th scope="col">Quantité&lt;/th>
+        &lt;th scope="col">&lt;/th>`
 
     return newRow;
 }
@@ -186,12 +214,12 @@
     let totalPrice = cart.getTotalPrice();
 
     newRow.innerHTML =
-        `<td class="d-none d-sm-table-cell"></td>
-        <td></td>
-        <td class="text-nowrap font-weight-bold">Total :</td>
-        <td id="total-price" class="text-nowrap text-success font-weight-bold">${formatPrice(totalPrice)}</td>
-        <td></td>
-        <td></td>`
+        `&lt;td class="d-none d-sm-table-cell">&lt;/td>
+        &lt;td>&lt;/td>
+        &lt;td class="text-nowrap font-weight-bold">Total :&lt;/td>
+        &lt;td id="total-price" class="text-nowrap text-success font-weight-bold">${formatPrice(totalPrice)}&lt;/td>
+        &lt;td>&lt;/td>
+        &lt;td>&lt;/td>`
 
     return newRow;
 }
@@ -375,3 +403,26 @@ document.getElementById("order-form").addEventListener("submit",validateForm);
 
 
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cart.html">Cart</a></li><li><a href="CartItem.html">CartItem</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addEmptyCartMessage">addEmptyCartMessage</a></li><li><a href="global.html#addErrorToMain">addErrorToMain</a></li><li><a href="global.html#addErrorToProductList">addErrorToProductList</a></li><li><a href="global.html#addHeadingsToTable">addHeadingsToTable</a></li><li><a href="global.html#addItemToTable">addItemToTable</a></li><li><a href="global.html#addToCart">addToCart</a></li><li><a href="global.html#addTotalToTable">addTotalToTable</a></li><li><a href="global.html#buildContactData">buildContactData</a></li><li><a href="global.html#buildEmptyMessageDiv">buildEmptyMessageDiv</a></li><li><a href="global.html#buildErrorElement">buildErrorElement</a></li><li><a href="global.html#buildHeadingsRow">buildHeadingsRow</a></li><li><a href="global.html#buildItemRow">buildItemRow</a></li><li><a href="global.html#buildProductCard">buildProductCard</a></li><li><a href="global.html#buildProductImage">buildProductImage</a></li><li><a href="global.html#buildTable">buildTable</a></li><li><a href="global.html#buildTotalRow">buildTotalRow</a></li><li><a href="global.html#clearTable">clearTable</a></li><li><a href="global.html#decreaseQuantity">decreaseQuantity</a></li><li><a href="global.html#deleteItem">deleteItem</a></li><li><a href="global.html#fillColorsList">fillColorsList</a></li><li><a href="global.html#fillProductData">fillProductData</a></li><li><a href="global.html#formatPrice">formatPrice</a></li><li><a href="global.html#getProduct">getProduct</a></li><li><a href="global.html#getProductList">getProductList</a></li><li><a href="global.html#increaseQuantity">increaseQuantity</a></li><li><a href="global.html#processParameters">processParameters</a></li><li><a href="global.html#sendOrderRequest">sendOrderRequest</a></li><li><a href="global.html#updateDisplayedTotalPrice">updateDisplayedTotalPrice</a></li><li><a href="global.html#validateForm">validateForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue May 11 2021 22:29:22 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
