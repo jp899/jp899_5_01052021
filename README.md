@@ -10,4 +10,4 @@ You need to clone the repository : https://github.com/OpenClassrooms-Student-Cen
 
 ### Front-end : Open the Website
 
-Once the back is running, you can simply open the 'index.html' file (located at the root of this repository) in your browser.
+Once the back is running, you can simply open the `index.html` file (located at the root of this repository) in your browser.
