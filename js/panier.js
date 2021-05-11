@@ -307,7 +307,7 @@ function addItemToTable(item){
  function buildContactData(){
      return {firstName: document.getElementById("firstName").value,
             lastName: document.getElementById("lastName").value,
-            address: document.getElementById("adress").value,
+            address: document.getElementById("address").value,
             city: document.getElementById("city").value,
             email: document.getElementById("email").value
         }
@@ -352,8 +352,11 @@ function addItemToTable(item){
             let orderDataString = JSON.stringify({orderId: response.orderId,
                                                 totalPrice: cart.getTotalPrice()});
             localStorage.setItem("orderData",orderDataString);
-            //empty the cart
+            
+            //empty the cart and empty the table
             cart.clear();
+            buildTable()
+
             //finally navigate to the confirmation page
             window.location.href = "./confirmation.html";
         })

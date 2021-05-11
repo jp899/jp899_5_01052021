@@ -90,12 +90,11 @@
       </div>
       
 
-      <h1 id="productTitle" class="jumbotron py-4 mb-3 mt-4 text-center"></h1>
+      <h1 id="productTitle" class="jumbotron py-4 mb-3 mt-4 text-center">Nom</h1>
 
       <div class="row"> 
 
-        <div class="col-12 col-lg-6">
-            <img id="productImg" class="img-fluid border border-warning rounded-lg" alt="Photo d'ours en peluche">
+        <div id="img-container" class="col-12 col-lg-6">
         </div>
 
         <div class="col-12 col-lg-6 mt-4">
@@ -121,7 +120,7 @@
                   <i class="fas fa-minus"></i>
                 </button>
              
-                <input type="text" id="article-quantity" name="article-quantity" class="article-quantity mx-1 form-control  bg-white" value="1" min="1" max="100" readonly>
+                <input type="text" id="article-quantity" name="article-quantity" class="article-quantity mx-1 form-control  bg-white" value="1" readonly>
 
                 <button type="button" id ="quantityPlusButton" class="btn btn-secondary btn-sm py-0 my-auto">
                   <i class="fas fa-plus"></i>
@@ -130,7 +129,7 @@
               </span>
             </div>
 
-           <button type="submit" id="addToCartButton"class="btn btn-info"
+           <button type="submit" id="addToCartButton" class="btn btn-info"
            data-toggle="modal" data-target="#addedToCartModal">Ajouter au panier</button>
     
           </form>

@@ -16,7 +16,7 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="../css/style.css">
-    
+
 
     <!-- JavaScript -->
 
@@ -130,7 +130,7 @@
     
       <h1 class="jumbotron py-4 mb-3 mt-4 text-center">Panier</h1>
 
-      <section class="row mt-4 justify-content-center">
+      <div class="row mt-4 justify-content-center">
 
         <table class="col col-lg-8 table table-striped table-responsive">
 
@@ -144,45 +144,49 @@
 
         </table>
 
-      </section>
+      </div>
 
 
-      <section class="row justify-content-center mt-3">
-          
-        <form id ="order-form" class="col col-lg-6 jumbotron">
+      <section class="row justify-content-center mt-3 ">
+
+        <div class="jumbotron flex-column col col-lg-6">
 
           <h2 class="mb-4 h3">Formulaire de commande</h2>
+            
+          <form id ="order-form">
 
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="firstName">Prénom :</label>
-              <input type="text" class="form-control" id="firstName" required>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="firstName">Prénom :</label>
+                <input type="text" class="form-control" id="firstName" required>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label for="lastName">Nom :</label>
+                <input type="text" class="form-control" id="lastName" required>
+              </div>
+            </div>
+        
+            <div class="form-group">
+              <label for="address">Adresse :</label>
+              <textarea class="form-control" id="address" rows="3" required></textarea>
             </div>
 
-            <div class="form-group col-md-6">
-              <label for="lastName">Nom :</label>
-              <input type="text" class="form-control" id="lastName" required>
+            <div class="form-group">
+              <label for="city">Ville :</label>
+              <input type="text" class="form-control col-12" id="city" required>
             </div>
-          </div>
-       
-          <div class="form-group">
-            <label for="address">Adresse :</label>
-            <textarea type="text" class="form-control" id="adress" rows="3" required></textarea>
-          </div>
 
-          <div class="form-group">
-            <label for="city">Ville :</label>
-            <input type="text" class="form-control col-12" id="city" required>
-          </div>
+            <div class="form-group">
+              <label for="email">Email :</label>
+              <input type="email" class="form-control" id="email" required>
+            </div>
+    
+            <button type="submit" id="validate-button" class="btn btn-primary mt-3">Valider la commande</button>
 
-          <div class="form-group">
-            <label for="email">Email :</label>
-            <input type="email" class="form-control" id="email" required>
-          </div>
-  
-          <button type="submit" id="validate-button" class="btn btn-primary mt-3">Valider la commande</button>
+          </form>
 
-        </form>
+      </div>
 
       </section>
 

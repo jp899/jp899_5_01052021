@@ -43,6 +43,20 @@ function fillColorsList(colors){
     }
 }
 
+/**
+ * Build the HTML structure and content of a the product image.
+ * @param {string} imageUrl The url where to fetch the image.
+ * @return {HTMLDivElement} - HTML element ready to display.
+ */
+ function buildProductImage(imageUrl){
+    let newImg = document.createElement("img");
+    newImg.id = "productImg";
+    newImg.classList.add("img-fluid", "border", "border-warning", "rounded-lg");
+    newImg.setAttribute("alt","Photo d'ours en peluche");
+    newImg.setAttribute("src",imageUrl);
+
+    return newImg;
+}
 
 /**
  * Fills the content of the HTML with the properties of the product.
@@ -54,7 +68,9 @@ function fillProductData(product){
     document.getElementById("productDescription").innerHTML = product.description;
     document.getElementById("productPrice").innerHTML = formatPrice(product.price);
     document.getElementById("productPrice").dataset.priceInCents = product.price;
-    document.getElementById("productImg").setAttribute("src",product.imageUrl);
+
+    let newImg = buildProductImage(product.imageUrl);
+    document.getElementById("img-container").appendChild(newImg);
 
     fillColorsList(product.colors);
 }
