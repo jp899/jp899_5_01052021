@@ -122,7 +122,7 @@
 
                     <span class="input-group ml-sm-3">
 
-                        <input style="max-width:60px" type="text" name="article-quantity" 
+                        <input type="text" name="article-quantity" 
                         class="article-quantity mx-1 form-control  bg-white" value="${item.quantity}" min="1" max="100" readonly>
                         
                         <div class="flex-column">
