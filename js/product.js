@@ -3,17 +3,17 @@
  * @param {HTMLDivElement} errorElement <div> containing an error message.
  */
 function addErrorToMain(errorElement){
-    const mainElement=document.getElementsByTagName("main")[0];
+    const mainElement = document.getElementsByTagName("main")[0];
 
     //First : Create a row <div>
-    let newDivElement=document.createElement("div");
+    let newDivElement = document.createElement("div");
     newDivElement.classList.add("row","mt-4","mb-3");
     //Then add the error <div> as a column of the row <div> 
     errorElement.classList.add("col-12","col-md-4","offset-md-4");
     newDivElement.append(errorElement);
 
     //Empty the <main> element to replace its content with the <div>
-    mainElement.innerHTML="";
+    mainElement.innerHTML = "";
     mainElement.append(newDivElement);
 }
 
@@ -25,7 +25,7 @@ function addErrorToMain(errorElement){
 function processParameters(){
     const urlString = location.toString();
     const url = new URL(urlString);
-    let productId=url.searchParams.get("productId");
+    let productId = url.searchParams.get("productId");
 
     return productId;
 }
@@ -37,8 +37,8 @@ function processParameters(){
  */
 function fillColorsList(colors){
     for(let color of colors){
-        let newOptionElement=document.createElement("option");
-        newOptionElement.innerHTML=color;
+        let newOptionElement = document.createElement("option");
+        newOptionElement.innerHTML = color;
         document.getElementById("article-color").append(newOptionElement);
     }
 }
@@ -49,11 +49,11 @@ function fillColorsList(colors){
  * @param {Object} product Product to get the data from.
  */
 function fillProductData(product){
-    document.title="Orinoco - "+product.name;
-    document.getElementById("productTitle").innerHTML=product.name;
-    document.getElementById("productDescription").innerHTML=product.description;
-    document.getElementById("productPrice").innerHTML=formatPrice(product.price);
-    document.getElementById("productPrice").dataset.priceInCents=product.price;
+    document.title = "Orinoco - " + product.name;
+    document.getElementById("productTitle").innerHTML = product.name;
+    document.getElementById("productDescription").innerHTML = product.description;
+    document.getElementById("productPrice").innerHTML = formatPrice(product.price);
+    document.getElementById("productPrice").dataset.priceInCents = product.price;
     document.getElementById("productImg").setAttribute("src",product.imageUrl);
 
     fillColorsList(product.colors);
@@ -68,8 +68,8 @@ function fillProductData(product){
  */
 function addToCart(event){
     event.preventDefault();
-    let color=document.getElementById("article-color").value;
-    let quantity=parseInt(document.getElementById("article-quantity").value);
+    let color = document.getElementById("article-color").value;
+    let quantity = parseInt(document.getElementById("article-quantity").value);
     let price = parseInt(document.getElementById("productPrice").dataset.priceInCents);
     let name = document.getElementById("productTitle").innerText;
     let imageUrl = document.getElementById("productImg").getAttribute("src");
@@ -85,11 +85,11 @@ function addToCart(event){
  */
  function decreaseQuantity(event){
     event.preventDefault();
-    let quantity=parseInt(document.getElementById("article-quantity").value);
+    let quantity = parseInt(document.getElementById("article-quantity").value);
 
     // Can't go lower than 1.
     if(quantity > 1){
-        document.getElementById("article-quantity").value=quantity-1;
+        document.getElementById("article-quantity").value = quantity-1;
     }
 }
 
@@ -101,14 +101,14 @@ function addToCart(event){
  */
  function increaseQuantity(event){
     event.preventDefault();
-    let quantity=parseInt(document.getElementById("article-quantity").value);
+    let quantity = parseInt(document.getElementById("article-quantity").value);
 
-    document.getElementById("article-quantity").value=quantity+1;
+    document.getElementById("article-quantity").value = quantity+1;
 }
 
 
-const cart=new Cart();
-const productId=processParameters();
+const cart = new Cart();
+const productId = processParameters();
 
 getProduct(productId)
 .then(function(product){
@@ -119,6 +119,6 @@ getProduct(productId)
 })
 .catch(function(error){
     console.log(error);
-    const errorElement=buildErrorElement(error);
+    const errorElement = buildErrorElement(error);
     addErrorToMain(errorElement);
 });

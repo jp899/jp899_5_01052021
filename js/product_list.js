@@ -14,9 +14,9 @@ function addErrorToProductList(errorElement){
  * @return {HTMLDivElement} - HTML element ready to display.
  */
 function buildProductCard(product){
-    let newCard=document.createElement("div");
+    let newCard = document.createElement("div");
     newCard.classList.add("col-12","col-lg-4");
-    newCard.innerHTML=`<div class="card mt-3 mb-2 my-lg-3 shadow rounded-lg">
+    newCard.innerHTML = `<div class="card mt-3 mb-2 my-lg-3 shadow rounded-lg">
                             <img src="${product.imageUrl}" alt="Photo d'ours en peluche" class=".card-img-top rounded-lg">
                             <div class="card-body">
                                 <h2 class="card-title">${product.name}</h2>
@@ -42,13 +42,13 @@ function buildProductCard(product){
 getProductList()
 .then(function(productList){
     for (let product of productList){
-        let newCard=buildProductCard(product);
+        let newCard = buildProductCard(product);
         document.getElementById("product_list").appendChild(newCard);
     }
 })
 .catch(function(error){
     console.log(error);
-    let errorElement=buildErrorElement(error);
+    let errorElement = buildErrorElement(error);
     addErrorToProductList(errorElement);
 });
 

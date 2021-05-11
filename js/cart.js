@@ -26,12 +26,12 @@
                 throw new TypeError("Incorrect arguments");
         }
         
-        this.productId=productId;
-        this.color=color;
-        this.quantity=quantity;
-        this.price=price;
-        this.imageUrl=imageUrl;
-        this.name=name;
+        this.productId = productId;
+        this.color = color;
+        this.quantity = quantity;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.name = name;
     }
 
 }
@@ -52,7 +52,7 @@ class Cart{
      * If there is no cart data in localstorage : creates a empty array.
      */
     constructor(){
-        this.itemList=[];
+        this.itemList = [];
 
         if(localStorage.getItem('cart')){
             this.getFromLocalStorage();
@@ -68,10 +68,10 @@ class Cart{
      * @return {number} - the cumulative quantity of all items.
      */
     getTotalPrice(){
-        let totalPrice=0;
+        let totalPrice = 0;
 
         for(let item of this){
-            totalPrice+=item.price*item.quantity;
+            totalPrice += item.price*item.quantity;
         }
 
         return totalPrice;
@@ -84,7 +84,7 @@ class Cart{
      * @return {string[]} - List of productId.
      */
     getListOfProducts(){
-        let listOfProducts=[];
+        let listOfProducts = [];
         for(item of this){
             for(let i = 0; i < item.quantity; i++){
                 listOfProducts.push(item.productId);
@@ -185,7 +185,7 @@ class Cart{
      * Clear the array. Also clear the cart in localstorage.
      */
     clear(){
-        this.itemList=[];
+        this.itemList = [];
         this.saveInLocalStorage();
     }
 
@@ -223,15 +223,15 @@ class Cart{
             this.getFromLocalStorage();
         }
 
-        let cartItem=cart.searchItem(productId,color);
+        let cartItem = cart.searchItem(productId,color);
         // Add the item to the cart if it's not already in the cart.
         if(cartItem === null){
-            let newCartItem=new CartItem(productId,color,quantity,price,name,imageUrl);
+            let newCartItem = new CartItem(productId,color,quantity,price,name,imageUrl);
             this.pushItem(newCartItem);
         }
         // Update the item if it's already in the cart for the desired color.
         else{
-            cartItem.quantity+=quantity;
+            cartItem.quantity += quantity;
         }
 
         this.saveInLocalStorage();
@@ -245,7 +245,7 @@ class Cart{
      * @param {string} color The color to target.
      */
     removeItem(productId,color){
-        let index=this.searchItemIndex(productId,color);
+        let index = this.searchItemIndex(productId,color);
         if(index === -1){
             return;
         }
@@ -263,7 +263,7 @@ class Cart{
      * @param {string} [quantity=1] The quantity to add.
      */
      increaseQuantityOfItem(productId,color,quantity = 1){
-        let item=this.searchItem(productId,color);
+        let item = this.searchItem(productId,color);
         if(item === null){
             return;
         }
@@ -280,7 +280,7 @@ class Cart{
      * @param {string} [quantity=1] The quantity to substract.
      */
      decreaseQuantityOfItem(productId,color,quantity = 1){
-        let item=this.searchItem(productId,color);
+        let item = this.searchItem(productId,color);
         if(item === null){
             return;
         }

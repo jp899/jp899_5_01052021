@@ -17,25 +17,25 @@ const backAPIUrlOrder = backAPIUrlRoot + "order";
     }
 
     //Convert price to string.
-    let priceString=""+price;
+    let priceString = "" + price;
 
     //Add comma and missing zeroes to get from cents to euros.
     switch(priceString.length){
         case 1:
-            priceString="00,0"+priceString;
+            priceString = "00,0" + priceString;
             break;
         case 2:
-            priceString="00,"+priceString;
+            priceString = "00," + priceString;
             break;
         case 3:
-            priceString="0"+priceString.slice(0,-2)+","+priceString.slice(-2);
+            priceString = "0" + priceString.slice(0,-2) + "," + priceString.slice(-2);
             break;
         default:
-            priceString=priceString.slice(0,-2)+","+priceString.slice(-2);
+            priceString = priceString.slice(0,-2) + "," + priceString.slice(-2);
     }
 
     //Add currency symbol befor return.
-    return priceString+" &euro;";
+    return priceString + " &euro;";
 }
 
 
@@ -45,8 +45,8 @@ const backAPIUrlOrder = backAPIUrlRoot + "order";
  * @return {HTMLDivElement} - The <div> element.
  */
  function buildErrorElement(error){
-    let newElement=document.createElement("div");
-    newElement.innerHTML=error.message;
+    let newElement = document.createElement("div");
+    newElement.innerHTML = error.message;
     newElement.classList.add("h2","text-center","text-white","bg-danger","py-3","rounded-lg");
     return newElement;
     

@@ -6,8 +6,8 @@
  function decreaseQuantity(event){
     event.preventDefault();
     // Get the info to locate the row in wich the button has been clicked.
-    let productId=event.currentTarget.dataset.targetProductId;
-    let color=event.currentTarget.dataset.targetColor;
+    let productId = event.currentTarget.dataset.targetProductId;
+    let color = event.currentTarget.dataset.targetColor;
 
     // If the cart has been modified by another page, refresh the cart and the table
     if (cart.hasChanged()){
@@ -16,15 +16,15 @@
     }
 
     // Get the row in wich the button has been clicked.
-    let currentRow=document.querySelector(`[data-product-id="${productId}"][data-color="${color}"]`);
+    let currentRow = document.querySelector(`[data-product-id="${productId}"][data-color="${color}"]`);
 
     if(currentRow !== null){
         // Get the current quantity of the item.
-        let quantity=parseInt(currentRow.querySelector(".article-quantity").value);
+        let quantity = parseInt(currentRow.querySelector(".article-quantity").value);
 
         // // Can't go lower than 1.
         if(quantity > 1){
-            currentRow.querySelector(".article-quantity").value=quantity-1;
+            currentRow.querySelector(".article-quantity").value = quantity-1;
             cart.decreaseQuantityOfItem(productId,color);
             updateDisplayedTotalPrice();
         }
@@ -40,8 +40,8 @@
     event.preventDefault();
 
     // Get the info to locate the row in wich the button has been clicked.
-    let productId=event.currentTarget.dataset.targetProductId;
-    let color=event.currentTarget.dataset.targetColor;
+    let productId = event.currentTarget.dataset.targetProductId;
+    let color = event.currentTarget.dataset.targetColor;
 
     // If the cart has been modified by another page, refresh the cart and the table
     if (cart.hasChanged()){
@@ -50,13 +50,13 @@
     }
 
     // Get the row in wich the button has been clicked.
-    let currentRow=document.querySelector(`[data-product-id="${productId}"][data-color="${color}"]`);
+    let currentRow = document.querySelector(`[data-product-id="${productId}"][data-color="${color}"]`);
 
     if(currentRow !== null){
         // Get the current quantity of the item.
-        let quantity=parseInt(currentRow.querySelector(".article-quantity").value);
+        let quantity = parseInt(currentRow.querySelector(".article-quantity").value);
 
-        currentRow.querySelector(".article-quantity").value=quantity+1;
+        currentRow.querySelector(".article-quantity").value = quantity+1;
         cart.increaseQuantityOfItem(productId,color);
         updateDisplayedTotalPrice();
     }
@@ -71,8 +71,8 @@
     event.preventDefault();
 
     // Get the info to locate the row in wich the button has been clicked.
-    let productId=event.currentTarget.dataset.targetProductId;
-    let color=event.currentTarget.dataset.targetColor;
+    let productId = event.currentTarget.dataset.targetProductId;
+    let color = event.currentTarget.dataset.targetColor;
 
     // If the cart has been modified by another page, refresh the cart and the table
     if (cart.hasChanged()){
@@ -81,7 +81,7 @@
     }
 
     // Get the row in wich the button has been clicked.
-    let currentRow=document.querySelector(`[data-product-id="${productId}"][data-color="${color}"]`);
+    let currentRow = document.querySelector(`[data-product-id="${productId}"][data-color="${color}"]`);
 
     if(currentRow !== null){
         currentRow.remove();
@@ -104,10 +104,10 @@
  * @return {HTMLDivElement} - HTML element ready to display.
  */
  function buildItemRow(item){
-    let newRow=document.createElement("tr");
+    let newRow = document.createElement("tr");
     // Add data attributes to the row, to ease identification of each row
-    newRow.dataset.productId=item.productId;
-    newRow.dataset.color=item.color;
+    newRow.dataset.productId = item.productId;
+    newRow.dataset.color = item.color;
 
     newRow.innerHTML =
         `<td class="d-none d-sm-table-cell">
@@ -163,9 +163,9 @@
  * @return {HTMLDivElement} - HTML element ready to display.
  */
  function buildHeadingsRow(){
-    let newRow=document.createElement("tr");
+    let newRow = document.createElement("tr");
 
-    newRow.innerHTML=
+    newRow.innerHTML =
         `<th scope="col" class="d-none d-sm-table-cell col-sm-2"></th>
         <th scope="col">Article</th>
         <th scope="col">Couleur</th>
@@ -181,12 +181,12 @@
  * @return {HTMLDivElement} - HTML element ready to display.
  */
  function buildTotalRow(){
-    let newRow=document.createElement("tr");
+    let newRow = document.createElement("tr");
 
     // calculate total price of the cart
     let totalPrice = cart.getTotalPrice();
 
-    newRow.innerHTML=
+    newRow.innerHTML =
         `<td class="d-none d-sm-table-cell"></td>
         <td></td>
         <td class="text-nowrap font-weight-bold">Total :</td>
@@ -203,11 +203,11 @@
  * @return {HTMLDivElement} - HTML element ready to display.
  */
  function buildEmptyMessageDiv(){
-    let newDiv=document.createElement("div");
-    newDiv.id="empty-message";
+    let newDiv = document.createElement("div");
+    newDiv.id = "empty-message";
     newDiv.classList.add("font-weight-bold","bg-warning","text-center","py-3");
 
-    newDiv.innerHTML=
+    newDiv.innerHTML =
         `Votre panier est vide.`
 
     return newDiv;
@@ -221,7 +221,7 @@
     let totalPrice = cart.getTotalPrice();
 
     // Modify the displayed value
-    document.getElementById("total-price").innerHTML=formatPrice(totalPrice);
+    document.getElementById("total-price").innerHTML = formatPrice(totalPrice);
 }
 
 
@@ -230,7 +230,7 @@
  * @param {CartItem} item The item to add to the table.
  */
 function addItemToTable(item){
-    let newItemRow=buildItemRow(item);
+    let newItemRow = buildItemRow(item);
     document.getElementsByTagName("tbody")[0].appendChild(newItemRow);
 }
 
@@ -239,7 +239,7 @@ function addItemToTable(item){
  * Adds the headings row to the table of items in the DOM.
  */
  function addHeadingsToTable(){
-    let newHeadingsRow=buildHeadingsRow();
+    let newHeadingsRow = buildHeadingsRow();
     document.getElementsByTagName("thead")[0].appendChild(newHeadingsRow);
 }
 
@@ -249,7 +249,7 @@ function addItemToTable(item){
  * This last row contains the total price of the order.
  */
  function addTotalToTable(){
-    let newTotalRow=buildTotalRow();
+    let newTotalRow = buildTotalRow();
     document.getElementsByTagName("tbody")[0].appendChild(newTotalRow);
 }
 
@@ -258,7 +258,7 @@ function addItemToTable(item){
  * Clear the content and headings of the table.
  */
  function clearTable(){
-    let emptyMessage=document.getElementById("empty-message");
+    let emptyMessage = document.getElementById("empty-message");
     if (emptyMessage !== null){
         emptyMessage.remove();
     }
@@ -271,9 +271,9 @@ function addItemToTable(item){
  * Create a div with a message for the user to indicate that the cart is empty.
  */
  function addEmptyCartMessage(){
-    let newEmptyMessageDiv=buildEmptyMessageDiv();
-    let mainElement=document.getElementsByTagName("main")[0];
-    let firstSectionElement=document.getElementsByTagName("section")[0];
+    let newEmptyMessageDiv = buildEmptyMessageDiv();
+    let mainElement = document.getElementsByTagName("main")[0];
+    let firstSectionElement = document.getElementsByTagName("section")[0];
     mainElement.insertBefore(newEmptyMessageDiv,firstSectionElement);
 }
 
@@ -340,7 +340,7 @@ function addItemToTable(item){
     // If All controls are OK : submit order to the server 
     else{
         // Create the contact object
-        let contactData=buildContactData();
+        let contactData = buildContactData();
 
         // Get the list of products from the cart
         let listOfProducts = cart.getListOfProducts();
@@ -367,7 +367,7 @@ function addItemToTable(item){
 
 
 
-const cart=new Cart();
+const cart = new Cart();
 buildTable();
 document.getElementById("order-form").addEventListener("submit",validateForm);
 
