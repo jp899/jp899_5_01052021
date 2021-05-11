@@ -359,7 +359,7 @@ function addItemToTable(item){
         })
         .catch(function(error){
             console.log(error);
-            alert("Erreur d'accès au serveur, veuillez réessayer plus tard.");
+            $("#errorModal").modal();
         }); 
     }
 }
