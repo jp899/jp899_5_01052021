@@ -46,8 +46,8 @@ const backAPIUrlOrder = backAPIUrlRoot + "order";
  */
  function buildErrorElement(error){
     let newElement = document.createElement("div");
-    newElement.innerHTML = error.message;
-    newElement.classList.add("h2","text-center","text-white","bg-danger","py-3","rounded-lg");
+    newElement.innerHTML = `Une erreur est survenue (${error.message}). Notre serveur est indisponible actuellement.`;
+    newElement.classList.add("h4","text-center","text-white","bg-danger","py-3","rounded-lg");
     return newElement;
     
 }
