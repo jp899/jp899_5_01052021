@@ -3,7 +3,7 @@
  * Decrease the quantity displayed and updates the cart.
  * @param {Event} event - Event that triggered the callback.
  */
- function decreaseQuantity(event){
+ function decreaseQuantityOfRow(event){
     event.preventDefault();
     // Get the info to locate the row in wich the button has been clicked.
     let productId = event.currentTarget.dataset.targetProductId;
@@ -36,7 +36,7 @@
  * Increase the quantity displayed and updates the cart.
  * @param {Event} event - Event that triggered the callback.
  */
- function increaseQuantity(event){
+ function increaseQuantityOfRow(event){
     event.preventDefault();
 
     // Get the info to locate the row in wich the button has been clicked.
@@ -67,7 +67,7 @@
  * Removes the item from the displayed table and from the cart
  * @param {Event} event - Event that triggered the callback.
  */
- function deleteItem(event){
+ function deleteItemOfRow(event){
     event.preventDefault();
 
     // Get the info to locate the row in wich the button has been clicked.
@@ -149,9 +149,9 @@
         </td>`
 
     // Add callbacks to the different buttons of the row
-    newRow.querySelector(".quantityMinusButton").addEventListener("click",decreaseQuantity);
-    newRow.querySelector(".quantityPlusButton").addEventListener("click",increaseQuantity);
-    newRow.querySelector(".deleteButton").addEventListener("click",deleteItem);
+    newRow.querySelector(".quantityMinusButton").addEventListener("click",decreaseQuantityOfRow);
+    newRow.querySelector(".quantityPlusButton").addEventListener("click",increaseQuantityOfRow);
+    newRow.querySelector(".deleteButton").addEventListener("click",deleteItemOfRow);
 
     return newRow;
 }
@@ -204,7 +204,7 @@
  function buildEmptyMessageDiv(){
     let newDiv = document.createElement("div");
     newDiv.id = "empty-message";
-    newDiv.classList.add("font-weight-bold","bg-warning","text-center","py-3");
+    newDiv.classList.add("font-weight-bold","bg-info","text-white", "h5", "text-center","py-3");
 
     newDiv.innerHTML =
         `Votre panier est vide.`
