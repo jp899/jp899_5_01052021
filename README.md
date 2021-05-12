@@ -6,7 +6,7 @@ Project n°5 of OpenClassrooms Web Developer training : Building an e-commerce w
 ### Back-end : Install and launch the back-end server
 
 First, you need the back-end server running. It is not included directly in this project.
-You need to clone the repository : https://github.com/OpenClassrooms-Student-Center/JWDP5, and follow its installation and launch instructions.
+You need to clone the [back-end repository](https://github.com/OpenClassrooms-Student-Center/JWDP5), and follow its installation and launch instructions.
 
 ### Front-end : Open the Website
 
