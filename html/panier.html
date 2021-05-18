@@ -158,28 +158,33 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="firstName">Prénom :</label>
-                <input type="text" class="form-control" id="firstName" required>
+                <input type="text" class="form-control" id="firstName">
+                <div id="firstName-feedback" class="invalid-feedback"></div>
               </div>
 
               <div class="form-group col-md-6">
                 <label for="lastName">Nom :</label>
-                <input type="text" class="form-control" id="lastName" required>
+                <input type="text" class="form-control" id="lastName">
+                <div id="lastName-feedback" class="invalid-feedback"></div>
               </div>
             </div>
         
             <div class="form-group">
               <label for="address">Adresse :</label>
-              <textarea class="form-control" id="address" rows="3" required></textarea>
+              <textarea class="form-control" id="address" rows="3"></textarea>
+              <div id="address-feedback" class="invalid-feedback"></div>
             </div>
 
             <div class="form-group">
               <label for="city">Ville :</label>
-              <input type="text" class="form-control col-12" id="city" required>
+              <input type="text" class="form-control col-12" id="city">
+              <div id="city-feedback" class="invalid-feedback"></div>
             </div>
 
             <div class="form-group">
               <label for="email">Email :</label>
-              <input type="email" class="form-control" id="email" required>
+              <input type="text" class="form-control" id="email">
+              <div id="email-feedback" class="invalid-feedback"></div>
             </div>
     
             <button type="submit" id="validate-button" class="btn btn-primary mt-3">Valider la commande</button>

@@ -313,19 +313,115 @@ function addItemToTable(item){
 }
 
 
+/**
+ * Check if the argument is a valid name/city with a regular expression.
+ * @param {string} name - The string to check.
+ * @return {boolean} - true if the name/city is valid.
+ */
+ function isValidName(name){
+    // At least 1 alpha caracter + one or more of non digit characters.
+    const regex = /^[a-zA-Z]{1}[\D]+$/;
+    return regex.test(name);
+}
+
+
+/**
+ * Check if the argument is a valid physical adress with a regular expression.
+ * @param {string} address - The string to check.
+ * @return {boolean} - true if the address is valid.
+ */
+ function isValidPhysicalAddress(address){
+    // At least 1 alpha/digit character + one or more of any character.
+    const regex = /^[a-zA-Z0-9][\s\S]+$/;
+    return regex.test(address);
+}
+
+
+/**
+ * Check if the argument is a valid email adress with a regular expression.
+ * @param {string} email - The string to check.
+ * @return {boolean} - true if the address is valid.
+ */
+ function isValidEmail(email){
+    // Same regex used to check type="email" input in HTML5.
+    // Remark : it allows emails without Top Level Domain (ex : admin@mailserver1)
+    //         which are rare, but possible and valid emails.
+    const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    return regex.test(email);
+}
+
+
+/**
+ * Validates the data submited by the user.
+ * @return {boolean} - true if all fields are OK.
+ */
+ function userDataValidate(){
+    const toCheck = ["firstName", "lastName", "email", "address", "city"];
+    let allValid = true;
+
+    for (let field of toCheck) {
+      let element = document.getElementById(field);
+      let feedbackMessage = document.getElementById(field + "-feedback");
+
+      //Check if the field has been filled by the user
+      if (! element.value) {
+        feedbackMessage.innerHTML = "Saisie obligatoire";
+        element.classList.remove("is-valid");
+        element.classList.add("is-invalid");
+        allValid = false;
+      }
+      // City / firstName / lastName only
+      else if ( (field === "firstName"
+                || field === "lastName"
+                || field === "city")
+            && ! isValidName(element.value)) {
+        feedbackMessage.innerHTML = "Saisissez au moins deux caractères valides";
+        element.classList.remove("is-valid");
+        element.classList.add("is-invalid");
+        allValid = false;
+      }
+      // Physical address only
+      else if (field === "address" && ! isValidPhysicalAddress(element.value)) {
+        feedbackMessage.innerHTML = "Saisissez au moins deux caractères valides";
+        element.classList.remove("is-valid");
+        element.classList.add("is-invalid");
+        allValid = false;
+      }
+      // Email only
+      else if (field === "email" && ! isValidEmail(element.value)) {
+        feedbackMessage.innerHTML = "Saisissez une adresse email valide";
+        element.classList.remove("is-valid");
+        element.classList.add("is-invalid");
+        allValid = false;
+      }
+      // If all controls are OK for the field
+      else {
+        feedbackMessage.innerHTML = "";
+        element.classList.remove("is-invalid");
+        element.classList.add("is-valid");
+      }
+    }
+
+    return allValid;
+}
+
 
 /**
  * Callback for form validation button.
- * Presence/type of the input fields has already been checked with HTML constraints
  * @param {Event} event - Event that triggered the callback.
  */
- function validateForm(event){
+function validateForm(event){
     
     event.preventDefault();
-
+    
+    // Check presence/type of the input fields
+    if(! userDataValidate())
+    {
+        return;
+    }
     // If the cart has been modified by another page, refresh the cart and the table
     // Then display a modal to inform the user.
-    if (cart.hasChanged()){
+    else if (cart.hasChanged()){
         console.log("test");
         cart.getFromLocalStorage();
         buildTable();
